@@ -1,0 +1,8 @@
+*.dll
+*.exe
+*.obj
+*.lib
+*.pdb
+*.map
+*.log
+Diagnostics/
