@@ -3,6 +3,11 @@
 Built from the project's git history (snapshot `0f84e0ea`) and `Documentation/VERIFIED-FEATURES.md`. "H2.xx" are the author's internal test
 builds; each was exercised in real matches before the next. Only items marked LIVE in the verified sheet are confirmed working in matches.
 
+## 1.0.0 update (H2.98)
+* The gameplay DLL accepts the supported game on any drive and folder: it checks the game's folder layout plus the exact size,
+  PE timestamp and SHA-256 (it previously also required the author's own install path).
+* Player README: credits and optional donation link; version and supported game hash are built into the installer.
+
 ## 1.0.0 — player release (built from H2.97)
 * Player package: `INSTALL.bat` / `UNINSTALL.bat`, windowless launcher `CFG Offline Bots.exe`, hidden loader, gameplay DLL, SHA-256 checks.
 * Launcher verifies the supported game binary (CFG 3.5, SHA-256 `4FC4BB54...A90A6`), backs up saves (newest 10), never modifies game files or saves.

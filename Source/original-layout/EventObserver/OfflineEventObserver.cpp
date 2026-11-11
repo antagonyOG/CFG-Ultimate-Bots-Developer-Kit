@@ -410,8 +410,11 @@ bool ExactBuild(Reader& reader,std::uintptr_t module) noexcept {
         nt.OptionalHeader.Magic!=IMAGE_NT_OPTIONAL_HDR64_MAGIC || nt.OptionalHeader.SizeOfImage!=cfgprobe::ExecutableImageBytes) return false;
     wchar_t path[32768]{}; const auto length=GetModuleFileNameW(nullptr,path,32768);
     if (!length || length>=32768) return false;
-    constexpr wchar_t Expected[]=L"G:\\iknowimiconic\\CampForestGreenLauncher\\Games\\cfg-live\\CampForestGreen\\Binaries\\Win64\\SummerCamp-Win64-Shipping.exe";
-    if (_wcsicmp(path,Expected)!=0) return false;
+    // Any install location (any drive/folder). Identity = this process's own main image with the game's
+    // layout, plus the exact size, PE timestamp/image size above and the SHA-256 of the locked file below.
+    constexpr wchar_t ExpectedTail[]=L"\\CampForestGreen\\Binaries\\Win64\\SummerCamp-Win64-Shipping.exe";
+    constexpr std::size_t tail=(sizeof(ExpectedTail)/sizeof(wchar_t))-1;
+    if (length<=tail || _wcsicmp(path+(length-tail),ExpectedTail)!=0) return false;
     // Lock the exact image file against replacement during preparation. Hash is
     // of this handle, not a different path read; caller must re-pin installation.
     HANDLE file=CreateFileW(path,GENERIC_READ,FILE_SHARE_READ,nullptr,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,nullptr);
