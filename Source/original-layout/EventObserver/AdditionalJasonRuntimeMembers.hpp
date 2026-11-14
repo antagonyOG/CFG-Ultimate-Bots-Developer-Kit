@@ -302,7 +302,7 @@
         auto& s=bundleAdditional;const bool stopped=bundleKill.policy.Exclusive(now)||bundleDeathEnd.confirmedAt||bundleCompletionReady;
         if(s.burst.Owned()){if(!s.burst.Due(now,stopped))return false;s.burst.Step(host,now,stopped);return true;}
         const auto target=bundleDonorAdditional.additional.Target;
-        if(stopped||!target||now<s.burst.readyAt||now<s.burstCheckAt||!AdditionalInProgress())return false;
+        if(stopped||!target||now<s.burst.readyAt||now<s.burstCheckAt||!cfgeasy::BurstAllowed(bundleConfiguration.difficulty)||!AdditionalInProgress())return false;
         s.burstCheckAt=now+250;s.burstSquared=-1.f;const bool began=s.burst.Begin(host,now,target,true,&s.burstSquared);
         bundleReport.h285Starts[1]=s.burst.starts;bundleReport.h285ChaseStarts[1]=s.burst.chaseStarts;
         if(s.burst.Owned()&&s.burstMarks<32){++s.burstMarks;cfgclosedtrace::Mark("f1-h267-burst",target,s.burst.starts);}

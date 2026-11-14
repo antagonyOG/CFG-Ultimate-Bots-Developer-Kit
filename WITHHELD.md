@@ -11,8 +11,8 @@ GC-safety, address pinning and loader layers are deleted (see PORTING-STATUS.md,
 - All generated address and binding tables (`*.generated.hpp`, 120 files) and the scripts that generate build pins (`Write-*BuildPin.ps1`).
 
 **Redacted values (structure kept)**
-- In the remaining source, 268 CFG 3.5 executable addresses (values inside the shipping image range) are replaced by `0x0` with the
-  comment `/*CFG3.5 address withheld*/`, and 41 copied game-code byte signatures by `{}` with `/*CFG3.5 code signature withheld*/`.
+- In the remaining source, 277 CFG 3.5 executable addresses (values inside the shipping image range) are replaced by `0x0` with the
+  comment `/*CFG3.5 address withheld*/`, and 46 copied game-code byte signatures by `{}` with `/*CFG3.5 code signature withheld*/`.
   Names, call sequences, field meanings and all decision logic are unchanged. Small struct field offsets are kept: they document which
   game data each behavior reads.
 

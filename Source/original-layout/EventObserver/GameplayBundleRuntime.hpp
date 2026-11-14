@@ -51,6 +51,7 @@ extern cfgh1::Report hostedH1Report;
 #include "PostMatchRecoveryObservation.hpp"
 #include "NativePursuitTargetObservation.hpp"
 #include "../Core/H246BurstPolicy.hpp"
+#include "../Core/EasyJasonTuning.hpp"
 #include "../Core/H247CombatPolicy.hpp"
 #include "../Core/JasonDeathCompletion.hpp"
 #include "DefeatedOutroProperty.hpp"
@@ -4264,7 +4265,7 @@ void BundlePhase(BundleAccess& a,cfgbundle::Lane lane,std::uint64_t now,bool con
             if(bundleKnifeRefresh.active){const auto refreshed=bundleKnifeRefresh.Step(a,now,bundleKnifeProbeIndex);
                 if(refreshed==cfgknife::RefreshResult::Unavailable)bundleKnifeProbePending=false;
                 return;}
-            bundleKnifeProbePending=false;bundleKnife.Begin(a,bundleKnifeProbeIndex,now);LatchBundleKnifeFirstAbort();return;}
+            bundleKnifeProbePending=false;a.EasyKnifeBegin(bundleKnifeProbeIndex,now);LatchBundleKnifeFirstAbort();return;}
         if(sweaterContinuation==cfgsweater::Continuation::Fresh){
             a.FreshSweaterContinuation(now);
             if(bundleSweaterPolicy.stage==cfgsweater::Stage::Refused)
@@ -4390,7 +4391,7 @@ void BundlePhase(BundleAccess& a,cfgbundle::Lane lane,std::uint64_t now,bool con
             if(refreshed==cfgknife::RefreshResult::Unavailable)bundleKnifeProbePending=false;
             return;}
         bundleKnifeProbePending=false;
-        bundleKnife.Begin(a,bundleKnifeProbeIndex,now);
+        a.EasyKnifeBegin(bundleKnifeProbeIndex,now);
         LatchBundleKnifeFirstAbort();
         return; // Fresh bounded callback, even if native entry gates refuse.
     }
@@ -4657,7 +4658,7 @@ void BundlePhase(BundleAccess& a,cfgbundle::Lane lane,std::uint64_t now,bool con
         if(why&&why<bundleReport.h285Veto.size())++bundleReport.h285Veto[why];
         if(bundleKnifeProbePending&&chaseRange&&!why)++bundleReport.h285Veto[0]; // probe pending, burst allowed by H2.85
     }
-    if(cfgh246::BurstWanted(DonorNativeMovementLeasePublished(),squared,bundleFootBurst.Owned(),now,bundleFootBurst.readyAt)&&
+    if(cfgeasy::BurstAllowed(bundleConfiguration.difficulty)&&cfgh246::BurstWanted(DonorNativeMovementLeasePublished(),squared,bundleFootBurst.Owned(),now,bundleFootBurst.readyAt)&&
        !bundleCarPursuit.Active(now)&&!bundleCarSpeed.active&&!bundleTraps.Busy()&&!bundleHiding.Active()&&
        !bundleDoorRecovery.breaking&&!bundleDoorRecovery.phase&&!bundleKnife.Busy()&&(!bundleKnifeProbePending||chaseRange)){
         // Start on a later independently budgeted callback, never inherit the

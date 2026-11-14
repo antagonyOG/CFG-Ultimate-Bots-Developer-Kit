@@ -3,6 +3,27 @@
 Built from the project's git history (snapshot `0f84e0ea`) and `Documentation/VERIFIED-FEATURES.md`. "H2.xx" are the author's internal test
 builds; each was exercised in real matches before the next. Only items marked LIVE in the verified sheet are confirmed working in matches.
 
+## 1.0.3 — Easy Jason balance (source change included in this kit)
+* **Easy Jason (difficulty 0)**: AI Jason no longer uses on-foot speed bursts, and the knife cooldown is 30 s instead of 12 s, for the primary
+  Jason and the F1 Jason. Easy keeps its existing half damage. Normal and Hard are unchanged. Flag: `CFG_EASY_JASON_TUNING` (default 1; 0 compiles
+  both gates out). See `Source/original-layout/Core/EasyJasonTuning.hpp` and the fixture `Tests/EasyJasonTuningTests.cpp`.
+  * Burst gate: `cfgeasy::BurstAllowed(difficulty)` at the primary burst start check, inside `FootBurstBegin`, and at the F1 burst start.
+  * Knife cooldown: `EasyKnifeBegin` (primary) extends the cooldown after a throw really starts; the F1 Jason's three cooldown settings use
+    `cfgeasy::KnifeCooldownMs(difficulty)`.
+
+## 1.0.1 – 1.0.3 — lobby, small-map and intro changes (policy headers included, call sites not)
+The source in this kit remains the 1.0.0 snapshot (H2.97/H2.98) plus the Easy Jason change above and the self-contained policy/runtime headers listed below
+(`Core/HostedLobbyCap.hpp`, `Core/HostedLobbyKick.hpp`, `Core/OfflineMapCounselorCap.hpp`, `Core/IntroLookupRetry.hpp`, `EventObserver/HostedLobbyCapRuntime.hpp`,
+`EventObserver/HostedLobbyKickRuntime.hpp`), with addresses and code signatures withheld as in `WITHHELD.md`. The call sites that wire them in
+(`HostedH1Runtime.hpp`, `NativeOfflineStartup.hpp`, `FrontendBundleRuntime.hpp`, `NativeOfflineIntroMetadata.hpp`) are still the 1.0.0 versions. The following player-release changes are
+described here for developers; only the headers listed above are in the kit:
+* **7-human lobby cap with AI Jason** (1.0.1): when AI Jason is on, a hosted lobby is capped at 7 humans so the eighth slot stays free. A full lobby
+  no longer risks a freeze (1.0.2: data-only cap, no host-beacon detour).
+* **Lobby kick** (1.0.2): with AI Jason on and 8 humans in the lobby, the host removes the most recent joiner through the game's own kick request.
+* **Small-map counselor cap** (1.0.2): 10 counselors only on Crystal Lake Small, its snow version and Packanack Small; on every other map a request
+  for 10 is reduced to 9 (including the `NumCounselors` option string), which fixes matches that ended seconds after start.
+* **Stuck-intro retry** (1.0.2): a transient lookup failure after the killer class write is re-checked instead of leaving the intro stuck.
+
 ## 1.0.0 update (H2.98)
 * The gameplay DLL accepts the supported game on any drive and folder: it checks the game's folder layout plus the exact size,
   PE timestamp and SHA-256 (it previously also required the author's own install path).

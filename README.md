@@ -21,7 +21,7 @@ Only features confirmed in real matches (release 1.0.0, see `Documentation/VERIF
 
 * Offline: play as a counselor against AI Jason, or as Jason against counselor bots; hosted online lobbies (host runs the mod, joiners need nothing); Challenges mode; mode switching in one game session.
 * AI Jason: pursuit, Morph (teleport ability) with running-counselor interception, Shift-style speed bursts with predictive aim, throwing knives, traps, door open/break, hiding-spot search, grab kills, car interception (primary Jason), water/stuck recovery, using the game's native underwater kill.
-* F1 spawns an additional AI Jason (offline and hosted); F3 adds counselor bots (up to ten counselors).
+* F1 spawns an additional AI Jason (offline and hosted); F3 adds counselor bots (up to ten counselors on Crystal Lake Small, its snow version and Packanack Small; nine on other maps in the 1.0.2+ player release).
 * Counselor bots: convergence on Jason when the sweater/kill setup is active, emotes, sweater power (carried over from the original mod).
 * Custom menus: expanded offline setup rows and hosted-lobby rows (Jason on/off, difficulty, fill empty slots, number of Jasons).
 * Jason spectating (F4), Challenges edge walls removed, out-of-bounds no longer ends the match while new map areas stream in.
@@ -36,7 +36,7 @@ Only features confirmed in real matches (release 1.0.0, see `Documentation/VERIF
 
 ## Project Status
 
-* Mod release **1.0.0** (built from internal test line H2.97). The player installer was built but, at the time of this snapshot, not yet live-tested as an install.
+* Mod player release **1.0.3** (source snapshot: 1.0.0 / H2.97-H2.98 plus the Easy Jason balance change; later lobby-cap, kick, small-map and intro fixes are described in `CHANGELOG.md` but not included as source). The 1.0.0 installer was built but, at the time of that snapshot, not yet live-tested as an install.
 * **Nothing in this kit has been natively integrated or tested inside a CFG development environment.** See `PORTING-STATUS.md` for an honest per-system assessment.
 * Disabled or unproven in 1.0.0 (not claimed as working): F1 Jason in a car, hosted lobby chat move, bot near-follow, bot melee assist, end-of-match summary and Challenges replay, Myers and Centered-Camera add-ons.
 

@@ -573,13 +573,13 @@ startupMayFinish=true;}
                     if(s.KnifeLaunched&&s.KnifeDriverAtRelease&&driver==s.KnifeDriverAtRelease&&time>=s.KnifeReleasedAt+500)
                         knife.DonorNativeAdditionalKnifeCall(source.owner,cfgknife::disk::Finalize);
                     if(s.KnifeLaunched&&s.KnifeDriverAtRelease&&driver!=s.KnifeDriverAtRelease){
-                        s.KnifeActive=false;s.KnifeTarget=0;s.NextKnifeAt=time+12000;
+                        s.KnifeActive=false;s.KnifeTarget=0;s.NextKnifeAt=time+cfgeasy::KnifeCooldownMs(bundleConfiguration.difficulty);
                         cfgclosedtrace::Mark("f1-knife-complete",pawn,time);return true;
                     }
                 }
                 if(time>=s.KnifeEndAt){
                     knife.DonorNativeAdditionalKnifeCall(source.owner,cfgknife::disk::Finalize);
-                    s.KnifeActive=false;s.KnifeTarget=0;s.NextKnifeAt=time+12000;
+                    s.KnifeActive=false;s.KnifeTarget=0;s.NextKnifeAt=time+cfgeasy::KnifeCooldownMs(bundleConfiguration.difficulty);
                     cfgclosedtrace::Mark("f1-knife-timeout",pawn,time);
                 }
                 return true;
@@ -597,7 +597,7 @@ startupMayFinish=true;}
             const bool aimed=knife.DonorNativeAdditionalKnifeAim(source.owner,target);
             cfgclosedtrace::Mark("f1-knife-aim",pawn,aimed?1u:0u);
             s.KnifeActive=true;s.KnifeReleased=false;s.KnifeLaunched=false;s.KnifeTarget=target;s.KnifeTargetSerial=serial;
-            s.KnifeReleaseAt=time+900;s.KnifeEndAt=time+3500;s.NextKnifeAt=time+12000;
+            s.KnifeReleaseAt=time+900;s.KnifeEndAt=time+3500;s.NextKnifeAt=time+cfgeasy::KnifeCooldownMs(bundleConfiguration.difficulty);
             cfgclosedtrace::Mark("f1-knife-armed",target,static_cast<std::uint64_t>(distance));return true;
         }
 #else

@@ -42,8 +42,10 @@
                 for(unsigned i=0;i<4;++i)if(!r_.Read(bundleFootMovement.object+fields[i],values[i]))return false;
                 return FootBurstMovement();
     }
+    // Easy Jason: bundleKnife.Begin sets the stock 12 s cooldown; Easy extends it to 30 s once a throw really started.
+    bool EasyKnifeBegin(unsigned index,std::uint64_t now){const bool began=bundleKnife.Begin(*this,index,now);if(began&&cfgeasy::Easy(bundleConfiguration.difficulty))bundleKnife.nextAt=now+cfgeasy::KnifeCooldownMs(bundleConfiguration.difficulty);return began;}
     bool FootBurstBegin(std::uint64_t now,bool underLease=false){
-        if(bundleFootBurst.Owned()||now<bundleFootBurst.readyAt)return false;
+        if(bundleFootBurst.Owned()||now<bundleFootBurst.readyAt||!cfgeasy::BurstAllowed(bundleConfiguration.difficulty))return false;
         struct Host {BundleAccess& a;
             bool Observe(std::array<float,4>& values){return a.FootBurstObserve(values);}
         }host{*this};

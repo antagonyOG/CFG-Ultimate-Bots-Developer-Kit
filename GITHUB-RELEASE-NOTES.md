@@ -7,10 +7,18 @@ A source-reference kit for the Camp Forest Green team. It documents and includes
 AI Jason, counselor bots, second-Jason (F1), custom menus, hosted-lobby AI and Challenges changes can be ported **natively** into CFG's UE4 C++ source
 and Blueprints, removing the need for an injected DLL.
 
+## What's new in 1.0.3
+* **Easy Jason balance (source included)** — on Easy, AI Jason (primary and F1) no longer uses speed bursts and throws knives every 30 s instead of 12 s;
+  half damage is unchanged; Normal and Hard are unchanged. Flag `CFG_EASY_JASON_TUNING`; code in `Core/EasyJasonTuning.hpp` plus small gates in
+  `EventObserver/`; fixture in `Tests/EasyJasonTuningTests.cpp`.
+* **Player-release fixes (headers included, call sites not updated)** — 7-human lobby cap with AI Jason and automatic removal of the most recent joiner
+  when an eighth human is in, full-lobby safety, the small-map counselor cap (10 only on Crystal Lake Small, its snow version and Packanack Small;
+  9 elsewhere), and the stuck-intro retry. See `CHANGELOG.md`.
+
 ## Contents
 * `INTEGRATION-GUIDE.md` (15 sections), `ARCHITECTURE.md`, `PORTING-STATUS.md`, `BUILDING.md`, `CHANGELOG.md`, `THIRD-PARTY-NOTICES.md`, `LICENSE`.
 * `Source/` — subsystem indexes plus the unmodified source in `Source/original-layout/` (Core, EventObserver, RuntimeProbe).
-* `Tests/` — 19 standalone policy fixtures with a README.
+* `Tests/` — 20 standalone policy fixtures with a README.
 * `UnrealIntegration/` — example UE4 designs (controller, component, BT task/service, blackboard keys, data asset, UMG row mapping). **Examples only: not compiled or tested.**
 * `Documentation/` — verified feature sheet, feature-flag table, build-script references.
 
